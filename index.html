@@ -16,48 +16,64 @@
     <div id="display-too-small">
         <h1>This website requires a bigger screen. Try a larger screen</h1>
     </div>
+
+    <!-- <section id="login">
+        <div class="login-background">
+            <span>
+                <img src="" alt="" srcset="">
+            </span>
+            <form class="login-form" id="login-form">
+                <input type="text" class="login-input-field" id="userName" name="userName">
+                <input type="password" class="login-input-field" id="passwd" name="passwd">
+                <input type="button" onclick="submitLogin()" id="loginButton" value="login" name="loginButton">
+            </form>
+        </div>
+    </section> -->
+
     <!-- #Section top navigation bar -->
-    <section id="top-nav-bar-container">
-        <div class="top-nav-bar">
-            <div class="left-side" id="app-props-container">
-                <span class="logo">t.</span>
-                <p id="current-app"></p>
-                <div id="dynamic-props">
+    <section id="desktop">
+        <section id="top-nav-bar-container">
+            <div class="top-nav-bar">
+                <div class="left-side" id="app-props-container">
+                    <span class="logo">t.</span>
+                    <p id="current-app"></p>
+                    <div id="dynamic-props">
+                    </div>
                 </div>
-            </div>
-            <div class="right-side">
-                <div class="battery">
-                    <div class="battery-level" style="height:90%;"></div>
-                </div>
-                <div class="wifisignal-3 wifi">
-                    <div class="wv4 wave">
-                        <div class="wv3 wave">
-                            <div class="wv2 wave">
-                                <div class="wv1 wave">
+                <div class="right-side">
+                    <div class="battery">
+                        <div class="battery-level" style="height:90%;"></div>
+                    </div>
+                    <div class="wifisignal-3 wifi">
+                        <div class="wv4 wave">
+                            <div class="wv3 wave">
+                                <div class="wv2 wave">
+                                    <div class="wv1 wave">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <span class="ico ico-mglass"></span>
-                <em class="gg-options"></em>
-                <p id="current-date-time"></p>
-            </div>
-        </div>
-    </section>
-
-    <!-- #Section main applications -->
-    <section id="main-application-container">
-    </section>
-
-    <!-- #Section app dock -->
-    <section id="bottom-app-dock">
-        <div class="app-dock">
-            <div class="all-apps">
-                <div id="normal-apps" class="normal-apps">
+                    <span class="ico ico-mglass"></span>
+                    <em class="gg-options"></em>
+                    <p id="current-date-time"></p>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- #Section main applications -->
+        <section id="main-application-container">
+        </section>
+
+        <!-- #Section app dock -->
+        <section id="bottom-app-dock">
+            <div class="app-dock">
+                <div class="all-apps">
+                    <div id="normal-apps" class="normal-apps">
+                    </div>
+                </div>
+            </div>
+        </section>
     </section>
 
 
@@ -66,6 +82,7 @@
 </html>
 
 <script src="./js/app-pages.js"></script>
+<script src="./js/login.js"></script>
 <script>
     onresize = (event) => {
         let pageWidth = window.innerWidth;

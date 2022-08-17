@@ -17,7 +17,7 @@ function initApps(apps) {
     );
   });
 
-  fetch("./js/operatingSystem.js")
+  fetch("./js/userAvailable/operatingSystem.js")
     .then((res) => res.text())
     .then((data) => (OSClass = utils.getBlobURL(data, "text/javascript")));
 }

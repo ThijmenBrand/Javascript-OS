@@ -1,16 +1,7 @@
 <?php
+require __DIR__ . "/inc/bootstrap.php";
 
-/**
- *  An example CORS-compliant method.  It will allow any GET, POST, or OPTIONS requests from any
- *  origin.
- *
- *  In a production environment, you probably want to be more restrictive, but this gives you
- *  the general idea of what is involved.  For the nitty-gritty low-down, read:
- *
- *  - https://developer.mozilla.org/en/HTTP_access_control
- *  - https://fetch.spec.whatwg.org/#http-cors-protocol
- *
- */    // Allow from any origin
+// Allow from any origin
 if (isset($_SERVER['HTTP_ORIGIN'])) {
     // Decide if the origin in $_SERVER['HTTP_ORIGIN'] is one
     // you want to allow, and if so:
@@ -32,8 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
     exit(0);
 }
 
-$filePath = $_POST['filePath'];
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = explode('/', $uri);
 
-$files = glob($filePath . '/*');
+require PROJECT_ROOT_PATH . "/controller/FileSystemController.php";
 
-echo json_encode($files);
+if ($uri[5] == "filesystem") {
+    $objFeedController = new FileSystemController();
+    $strMethodName = $uri[6];
+    $objFeedController->{$strMethodName}();
+}

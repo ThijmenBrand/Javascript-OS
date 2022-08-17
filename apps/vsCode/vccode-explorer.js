@@ -70,9 +70,7 @@ function openFile(fileName, filePath = "", fileExt = "") {
   if (index > -1) {
     switchSession(index);
   } else {
-    $.post("./php/openUserFile.php", { filePath: filePath }, (res) => {
-      console.log(res);
-      res = JSON.parse(res);
+    operatingSystem.openUserFile(filePath).then((res) => {
       editorSessions.unshift({
         fileName: fileName,
         fileExt: fileExt,
@@ -93,7 +91,6 @@ function showOptions(file, ext) {
 
 function getUserDirectories(filePath = "../userFiles") {
   operatingSystem.showFilesInDIR(filePath).then((result) => {
-    result = JSON.parse(result);
     Array.from(result).forEach((file) => {
       let filePath = file;
       let fileName = file.split("/").at(-1);
