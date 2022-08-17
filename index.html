@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Thijmen - Desktop</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+    <div id="display-too-small">
+        <h1>This website requires a bigger screen. Try a larger screen</h1>
+    </div>
+    <!-- #Section top navigation bar -->
+    <section id="top-nav-bar-container">
+        <div class="top-nav-bar">
+            <div class="left-side" id="app-props-container">
+                <span class="logo">t.</span>
+                <p id="current-app"></p>
+                <div id="dynamic-props">
+                </div>
+            </div>
+            <div class="right-side">
+                <div class="battery">
+                    <div class="battery-level" style="height:90%;"></div>
+                </div>
+                <div class="wifisignal-3 wifi">
+                    <div class="wv4 wave">
+                        <div class="wv3 wave">
+                            <div class="wv2 wave">
+                                <div class="wv1 wave">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <span class="ico ico-mglass"></span>
+                <em class="gg-options"></em>
+                <p id="current-date-time"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- #Section main applications -->
+    <section id="main-application-container">
+    </section>
+
+    <!-- #Section app dock -->
+    <section id="bottom-app-dock">
+        <div class="app-dock">
+            <div class="all-apps">
+                <div id="normal-apps" class="normal-apps">
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</body>
+
+</html>
+
+<script src="./js/app-pages.js"></script>
+<script>
+    onresize = (event) => {
+        let pageWidth = window.innerWidth;
+        $("#display-too-small").css("display", pageWidth >= 1000 ? "none" : "block");
+    };
+
+    getAllApps();
+    updateTime();
+
+    function updateTime() {
+        let currentDate = new Date();
+        let currentTime = currentDate.getHours() + ":" + currentDate.getMinutes();
+        $("#current-date-time").text(currentDate.toDateString() + " " + currentTime);
+    }
+
+    setInterval(() => {
+        updateTime()
+    }, 1000)
+</script>

@@ -1,0 +1,39 @@
+<style>
+    .prompt-container {
+        position: absolute;
+        z-index: 20;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .inner-div {
+        background-color: white;
+        display: inline-block;
+    }
+
+    #restart-game {
+        display: none;
+    }
+
+    canvas {
+        position: relative;
+    }
+</style>
+<div id="snake-app">
+    <div id="play-game" class="play-game prompt-container">
+        <div class="inner-div">
+            <h1>SNAKE</h1>
+            <p onclick="startGame()">Play</p>
+        </div>
+    </div>
+    <div id="restart-game" class="play-game prompt-container">
+        <div class="inner-div">
+            <h1>SNAKE</h1>
+            <p onclick=" startGame()">Restart</p>
+        </div>
+    </div>
+    <canvas id="snake-board"></canvas>
+</div>
