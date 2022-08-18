@@ -1,4 +1,5 @@
 class operatingSystem {
+  //File things
   static baseFilePath =
     "https://www.thijmenbrand.nl/website/desktop-website/php/index.php/";
   static async showFilesInDIR(dir) {
