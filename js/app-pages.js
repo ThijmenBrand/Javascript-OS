@@ -71,10 +71,35 @@ class AppGeneration {
 
 let appGeneration = new AppGeneration();
 let apps = [];
+let dockApps = ["vsCode", "browser", "file-explorer"];
 let OSClass;
 
-function initApps(apps) {
+function showAllAppDock() {
+  let allAppsElementIsVisible = $("#all-apps-container").hasClass(
+    "all-apps-visible"
+  );
+
+  if (allAppsElementIsVisible) {
+    $("#all-apps-container").removeClass("all-apps-visible");
+    $("#all-apps").empty();
+    return;
+  }
+
+  $("#all-apps-container").addClass("all-apps-visible");
+  loadAllApps();
+}
+
+function loadAllApps() {
   apps.forEach(async (page) => {
+    const html = `<span class='app-name-combination' onclick='openApp("${page}");showAllAppDock()'><object class='app app-in-all-apps' data="./apps/${page}/app-icon.svg" type="image/png">
+    <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${page}")'>
+  </object><p>${page}</p></span>`;
+    $("#all-apps").append(html);
+  });
+}
+
+function initApps() {
+  dockApps.forEach(async (page) => {
     const html = `<object class='app' data="./apps/${page}/app-icon.svg" type="image/png" onclick='openApp("${page}")'>
     <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${page}")'>
   </object>`;

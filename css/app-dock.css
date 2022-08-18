@@ -1,10 +1,11 @@
 :root {
   --app-icons-size: 35px;
+  --app-bar-height: 40px;
 }
 
 .app-dock {
   width: 100%;
-  height: 40px;
+  height: var(--app-bar-height);
   background-color: rgba(207, 207, 207, 0.95);
   position: absolute;
   margin: 0 auto;
@@ -12,7 +13,7 @@
   z-index: 50;
 }
 
-.all-apps {
+.app-bar {
   display: flex;
   height: 100%;
   align-items: center;
@@ -42,4 +43,43 @@
 
 .app:hover {
   transform: scale(1.05);
+}
+
+.all-apps-container {
+  background-color: rgba(207, 207, 207, 0.95);
+  width: 20%;
+  height: 30pc;
+  position: absolute;
+  bottom: var(--app-bar-height);
+  display: none;
+  z-index: 200;
+}
+.all-apps-container.all-apps-visible {
+  display: block;
+}
+
+#all-apps {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 20pc;
+  overflow-y: auto;
+  width: 100%;
+}
+
+.app.app-in-all-apps {
+  margin: 1pc;
+}
+.app-name-combination p {
+  display: inline-block;
+}
+.app-name-combination {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+}
+.app-name-combination:hover {
+  background-color: rgba(190, 190, 190, 0.95);
 }

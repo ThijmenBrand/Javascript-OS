@@ -55,10 +55,20 @@
         </section>
 
         <!-- #Section app dock -->
+        <div id="all-apps-container" class="all-apps-container">
+            <section class="all-apps-top-section">
+                <h3>All apps</h3>
+                <form>
+                    <input type="text" class="app-search-bar" placeholder="start typing..." id="app-search-query">
+                </form>
+            </section>
+            <section id="all-apps">
+            </section>
+        </div>
         <section id="bottom-app-dock">
             <div class="app-dock">
-                <div class="all-apps">
-                    <img class='app' src="./assets/all-apps.svg" alt="all-apps">
+                <div class="app-bar">
+                    <img class='app' src="./assets/all-apps.svg" alt="all-apps" onclick="showAllAppDock()">
                     <div id="normal-apps" class="normal-apps">
                     </div>
                 </div>
@@ -78,6 +88,12 @@
         let pageWidth = window.innerWidth;
         $("#display-too-small").css("display", pageWidth >= 1000 ? "none" : "block");
     };
+
+    window.onclick = (event) => {
+        if (event.target != $("all-apps-container")) {
+            $("all-apps-container").css('display', 'none');
+        }
+    }
 
     getAllApps();
     updateTime();
