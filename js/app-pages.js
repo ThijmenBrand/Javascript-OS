@@ -1,3 +1,5 @@
+window.onmessage = (e) => openApp(e.data);
+
 class AppGeneration {
   cssFiles = [];
   jsFiles = [];
@@ -51,7 +53,7 @@ class AppGeneration {
     const source = `
     <html>
       <head>
-        <script src="https://thijmenbrand.nl/website/desktop-website/js/userAvailable/openAppRequest.js"
+        <script src="https://thijmenbrand.nl/website/desktop-website/js/app-pages.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         ${headPart}
       </head>
@@ -128,7 +130,7 @@ async function openApp(app) {
   let appFiles = [];
 
   await $.post(
-    "./php/discoverAppFiles.php",
+    "https://thijmenbrand.nl/website/desktop-website/php/discoverAppFiles.php",
     {
       filePath: `../apps/${app}/src`,
     },
@@ -139,7 +141,9 @@ async function openApp(app) {
   let headPart = appGeneration.computeHtmlHead(OSClass);
   let iframe = appGeneration.generateFinalApp(headPart);
 
-  await fetch("./statics/standard-items/app-container.html")
+  await fetch(
+    "https://thijmenbrand.nl/website/desktop-website/statics/standard-items/app-container.html"
+  )
     .then((res) => res.text())
     .then((txt) => {
       txt = txt
@@ -148,8 +152,6 @@ async function openApp(app) {
 
       $("#main-application-container").append(txt);
     });
-
-  console.clear();
 }
 
 function closeApp(app) {

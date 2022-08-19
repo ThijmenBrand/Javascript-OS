@@ -26,5 +26,5 @@ function openFileOrDir(filePath = "", fileType = "") {
     return;
   }
 
-  openApp("browser");
+  window.top.postMessage("browser", "*");
 }
