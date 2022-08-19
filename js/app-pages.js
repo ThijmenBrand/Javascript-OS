@@ -51,6 +51,7 @@ class AppGeneration {
     const source = `
     <html>
       <head>
+        <script src="https://thijmenbrand.nl/website/desktop-website/js/userAvailable/openAppRequest.js"
         <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
         ${headPart}
       </head>
@@ -123,6 +124,7 @@ async function getAllApps() {
 }
 
 async function openApp(app) {
+  if ($(`#${app}`).length) return;
   let appFiles = [];
 
   await $.post(
@@ -146,9 +148,12 @@ async function openApp(app) {
 
       $("#main-application-container").append(txt);
     });
+
+  console.clear();
 }
 
 function closeApp(app) {
+  $(`#${app}`).empty();
   $(`#${app}`).remove();
   $(`#init-${app}`).remove();
   $(`#init-two-${app}`).remove();

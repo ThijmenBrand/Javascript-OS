@@ -92,8 +92,8 @@ function showOptions(file, ext) {
 function getUserDirectories(filePath = "../userFiles") {
   operatingSystem.showFilesInDIR(filePath).then((result) => {
     Array.from(result).forEach((file) => {
-      let filePath = file;
-      let fileName = file.split("/").at(-1);
+      let filePath = file.filePath;
+      let fileName = file.filePath.split("/").at(-1);
       let ext = fileName.split(".")[1] || "dir";
       let placeInDom =
         filePath.split("/").at(-2) != "userFiles"

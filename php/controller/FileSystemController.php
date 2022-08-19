@@ -1,8 +1,17 @@
 <?php
+
+use Directory as GlobalDirectory;
+
 class File
 {
     public $fileContent = "";
     public $mimeType = "";
+}
+
+class Dir
+{
+    public $filePath = "";
+    public $fileType = "";
 }
 
 class FileSystemController extends BaseController
@@ -15,8 +24,18 @@ class FileSystemController extends BaseController
             $filePath = $arrQueryStringParams['dir'];
             $files = glob($filePath . '/*');
 
+            $allPaths = [];
+
+            foreach ($files as $file) {
+                $dir = new Dir();
+
+                $dir->filePath = $file;
+                $dir->fileType = filetype($file);
+                array_push($allPaths, $dir);
+            }
+
             $this->sendOutput(
-                json_encode($files),
+                json_encode($allPaths),
                 array('Content-Type: application/json', 'HTTP/1.1 200 OK')
             );
             exit();
