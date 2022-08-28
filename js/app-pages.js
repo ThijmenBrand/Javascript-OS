@@ -1,20 +1,13 @@
 let appGeneration = new AppGeneration();
+let domWorker = new DomWorker();
 let apps = [];
 let dockApps = ["vsCode", "browser", "file-explorer"];
 let OSClass;
 
 function openAppRequest([requestingApp, appToOpen]) {
-  const html = `
-    <div class="software-popup">
-      <p>${requestingApp} wants to open ${appToOpen}</p>
-      <p>Do you want to allow this?</p>
-      <span>
-        <button>Open ${appToOpen}</button>
-        <button>Decline</button>
-      </span>
-    </div>`;
-
-  $("#main-application-container").append(html);
+  $("#main-application-container").append(
+    DomDefaults.openAppPopup(requestingApp, appToOpen)
+  );
 }
 
 function showAllAppDock() {
@@ -47,6 +40,13 @@ function loadAllApps() {
 }
 
 function initApps() {
+  let window = new AppWindow({ title: "test123" });
+  window.init();
+  window.render();
+
+  let windowBehaviour = new WindowBehaviour(window);
+  windowBehaviour.init();
+
   dockApps.forEach(async (page) => {
     const html = `
       <object class='app' data="./apps/${page}/app-icon.svg" type="image/png" onclick='openApp("${page}")'>
@@ -99,8 +99,6 @@ async function openApp(app) {
 
       $("#main-application-container").append(txt);
     });
-
-  console.clear();
 }
 
 function closeApp(app) {
