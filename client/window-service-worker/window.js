@@ -47,8 +47,8 @@ class AppWindow {
     this.$element.setAttribute("data-id", windowCount.toString());
   }
 
-  render() {
-    this.$content.innerHTML = "<p>test123</p>";
+  render(content) {
+    this.$content.innerHTML = content;
 
     document
       .getElementById("main-application-container")
