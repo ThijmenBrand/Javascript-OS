@@ -32,10 +32,10 @@ class AppWindow {
   init() {
     if (this.inited) return;
 
-    this.#initTemplate();
+    this.initTemplate();
   }
 
-  #initTemplate() {
+  initTemplate() {
     this.$element = Utils.createElementFromHTML(windowTemplate);
 
     this.$content = this.$element.querySelector(".javascript-os-content");

@@ -1,17 +1,14 @@
 class WindowBehaviour {
-  constructor(window) {
-    this.window = window;
+  init(win) {
+    const onclick = (ev) => this.#click(ev, win);
+    win.$element.addEventListener("click", onclick);
+
+    this.#initMovement(win);
   }
 
-  init() {
-    this.window.$element.addEventListener("click", this.onClick);
-
-    this.initMovement();
-  }
-
-  initMovement() {
-    let dataId = this.window.$element.getAttribute("data-id");
-    let windowTitle = this.window.title;
+  #initMovement(win) {
+    let dataId = win.$element.getAttribute("data-id");
+    let windowTitle = win.title;
 
     $(`[data-id="${dataId}"]`).draggable({
       containment: "document",
@@ -19,13 +16,28 @@ class WindowBehaviour {
     });
   }
 
-  onClick(ev) {
+  #click(ev, win) {
     const target = ev.target;
     const hitButton = target.classList.contains("js-os-app-option");
 
     if (hitButton) {
       const action = ev.target.getAttribute("data-action");
-      console.log(action);
+
+      if (action == "close") this.#close(win);
+      if (action == "maximize") this.#maximize(win);
+      if (action == "minimize") this.#minimize(win);
     }
+  }
+
+  #close(win) {
+    win.$element.remove();
+  }
+  #maximize(win) {
+    win.$element.classList.add("window-full-screen");
+    win.$header.classList.add("window-full-screen");
+  }
+  #minimize(win) {
+    win.$element.classList.remove("window-full-screen");
+    win.$header.classList.remove("window-full-screen");
   }
 }

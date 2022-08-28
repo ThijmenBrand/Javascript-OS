@@ -44,8 +44,8 @@ function initApps() {
   window.init();
   window.render();
 
-  let windowBehaviour = new WindowBehaviour(window);
-  windowBehaviour.init();
+  let windowBehaviour = new WindowBehaviour();
+  windowBehaviour.init(window);
 
   dockApps.forEach(async (page) => {
     const html = `
