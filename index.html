@@ -49,9 +49,7 @@
         </section>
 
         <!-- #Section main applications -->
-        <section id="user-prompts">
-        </section>
-        <section id="main-application-container">
+        <section id="main-application-container" class="overlay-element">
         </section>
 
         <!-- #Section app dock -->
@@ -81,30 +79,7 @@
 
 </html>
 
+<script src="./js/app-generation/app-generation-helpers.js"></script>
 <script src="./js/app-pages.js"></script>
 <script src="./js/login.js"></script>
-<script>
-    onresize = (event) => {
-        let pageWidth = window.innerWidth;
-        $("#display-too-small").css("display", pageWidth >= 1000 ? "none" : "block");
-    };
-
-    window.onclick = (event) => {
-        if (event.target != $("all-apps-container")) {
-            $("all-apps-container").css('display', 'none');
-        }
-    }
-
-    getAllApps();
-    updateTime();
-
-    function updateTime() {
-        let currentDate = new Date();
-        let currentTime = currentDate.getHours() + ":" + currentDate.getMinutes();
-        $("#current-date-time").text(currentDate.toDateString() + " " + currentTime);
-    }
-
-    setInterval(() => {
-        updateTime()
-    }, 1000)
-</script>
+<script src="./js/index.js"></script>

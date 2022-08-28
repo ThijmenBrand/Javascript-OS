@@ -1,3 +1,8 @@
+#top-nav-bar-container {
+  height: 1.5em;
+  display: flex;
+}
+
 .top-nav-bar {
   font-family: "Albert Sans", sans-serif;
   width: 100%;
@@ -7,6 +12,7 @@
   z-index: 50;
   display: flex;
   position: absolute;
+  top: 0;
   justify-content: space-between;
 }
 

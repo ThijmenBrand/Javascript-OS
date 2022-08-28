@@ -104,8 +104,8 @@ function getUserDirectories(filePath = "../userFiles") {
       if (ext == "dir") {
         $(`#${placeInDom}`).append(
           `<span class='dir-parent'>
-                <span class='file-in-explorer' onclick='openFile("${fileName}", "${file}", "${ext}")' oncontextmenu='showOptions("${file}", "${ext}")'>
-                  <img src='https://www.thijmenbrand.nl/website/desktop-website/apps/vsCode/vscode-icons/file-icons/icon-${ext}.svg' alt='icon-${ext}'>
+                <span class='file-in-explorer' onclick='openFile("${fileName}", "${filePath}", "${ext}")' oncontextmenu='showOptions("${filePath}", "${ext}")'>
+                  <img src='https://www.thijmenbrand.nl/website/desktop-website/apps/vsCode/src/vscode-icons/file-icons/icon-${ext}.svg' alt='icon-${ext}'>
                   <p class='vs-code-file-in-explorer'>${fileName}</p>
                 </span>
                 <div class='dir-child' id='${fileName}'></div>
@@ -113,8 +113,8 @@ function getUserDirectories(filePath = "../userFiles") {
         );
       } else {
         $(`#${placeInDom}`).append(
-          `<span class='file-in-explorer' onclick='openFile("${fileName}", "${file}", "${ext}")' oncontextmenu='showOptions("${file}", "${ext}")'>
-                <img src='https://www.thijmenbrand.nl/website/desktop-website/apps/vsCode/vscode-icons/file-icons/icon-${ext}.svg' alt='icon-${ext}'>
+          `<span class='file-in-explorer' onclick='openFile("${fileName}", "${filePath}", "${ext}")' oncontextmenu='showOptions("${filePath}", "${ext}")'>
+                <img src='https://www.thijmenbrand.nl/website/desktop-website/apps/vsCode/src/vscode-icons/file-icons/icon-${ext}.svg' alt='icon-${ext}'>
                 <p id='${fileName}' class='vs-code-file-in-explorer'>${fileName}</p>
             </span>`
         );

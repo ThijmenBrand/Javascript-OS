@@ -10,12 +10,25 @@
 @import "./app-dock.css";
 @import "./top-bar.css";
 @import "./login.css";
+@import "./system-popup.css";
 
 /* app styles */
 @import "./desktop-app.css";
 
 :root {
   --appZIndex: 10;
+}
+
+#desktop {
+  height: 100vh;
+  width: 100%;
+}
+.overlay-element {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 #display-too-small {
