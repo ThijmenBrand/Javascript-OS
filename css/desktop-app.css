@@ -15,8 +15,6 @@
   top: 10em;
   position: absolute;
   display: inline-block;
-  height: 500px;
-  width: 800px;
   background-color: white;
 }
 
@@ -34,14 +32,29 @@
   width: 100%;
   border-radius: 10px 10px 0px 0px;
   background-color: rgb(211, 211, 211);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .app-top-header.window-full-screen {
+  border-radius: unset;
   margin-top: unset;
 }
 
 .app-top-header:hover {
   cursor: move;
+}
+
+.javascript-os-inner-icon {
+  height: 15px;
+  width: 15px;
+  background-repeat: no-repeat;
+  background-size: 15px 15px;
+}
+
+.javascript-os-icon {
+  margin-right: 10px;
 }
 
 .app-options {
@@ -52,10 +65,10 @@
   height: 100%;
 }
 
-.window-title {
+.javascript-os-title {
   display: inline-block;
   margin: 0;
-  color: white;
+  color: black;
   font-weight: lighter;
 }
 

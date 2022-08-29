@@ -10,4 +10,10 @@ class Utils {
     const blob = new Blob([code], { type });
     return URL.createObjectURL(blob);
   }
+  static async discoverAppFiles(app) {
+    let test = await $.post("./php/discoverAppFiles.php", {
+      filePath: `../apps/${app}/src`,
+    });
+    return JSON.parse(test);
+  }
 }

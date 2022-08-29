@@ -1,6 +1,8 @@
 let apps = [];
 
-//Make communcation socket between iframe and software
+/*
+  TODO: make a communcation socket between app and the software
+*/
 function openAppRequest([requestingApp, appToOpen]) {
   $("#main-application-container").append(
     DomDefaults.openAppPopup(requestingApp, appToOpen)
@@ -37,21 +39,8 @@ function loadAllApps() {
 }
 
 async function openApp(app) {
-  let appFiles = await $.post(
-    "./php/discoverAppFiles.php",
-    {
-      filePath: `../apps/${app}/src`,
-    },
-    (data) => data
-  );
-
-  let utils = new WindowUtils(app, JSON.parse(appFiles));
-  let iframe = utils.init();
-
-  let window = new AppWindow({ title: app });
-  window.init();
-  window.render(iframe);
-
-  let windowBehaviour = new WindowBehaviour();
-  windowBehaviour.init(window);
+  new CreateWindow({
+    title: app,
+    icon: `apps/${app}/app-icon.svg`,
+  }).createApplication();
 }

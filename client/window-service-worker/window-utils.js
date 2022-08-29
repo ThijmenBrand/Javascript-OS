@@ -85,7 +85,7 @@ class WindowUtils {
               </html>
             `;
 
-    let iframe = `<iframe id='iframe-${app}' class='app-iframe' src='${Utils.getBlobURL(
+    let iframe = `<iframe id='${app}' class='app-iframe' src='${Utils.getBlobURL(
       source,
       "text/html"
     )}'></iframe>`;

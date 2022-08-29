@@ -1,3 +1,5 @@
+let zIndex = 1;
+
 class WindowBehaviour {
   init(win) {
     const onclick = (ev) => this.#click(ev, win);
