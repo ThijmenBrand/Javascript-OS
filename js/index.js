@@ -1,4 +1,12 @@
-getAllApps();
+const options = {
+  dockApps: ["vsCode", "browser", "file-explorer"],
+};
+
+let startup = new Startup(options);
+let coreVars = new CoreVariables();
+
+startup.getAllApps();
+
 updateTime();
 
 setInterval(() => {

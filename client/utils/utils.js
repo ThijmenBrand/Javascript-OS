@@ -6,4 +6,8 @@ class Utils {
     // Change this to div.childNodes to support multiple top-level nodes.
     return div.firstChild;
   }
+  static getBlobURL(code, type) {
+    const blob = new Blob([code], { type });
+    return URL.createObjectURL(blob);
+  }
 }

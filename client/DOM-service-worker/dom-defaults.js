@@ -10,4 +10,9 @@ class DomDefaults {
           </span>
         </div>`;
   }
+  static appIcon(app) {
+    return `<object class='app' data="./apps/${app}/app-icon.svg" type="image/png" onclick='openApp("${app}")'>
+              <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${app}")'>
+            </object>`;
+  }
 }

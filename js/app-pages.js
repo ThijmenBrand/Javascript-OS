@@ -1,8 +1,6 @@
-let appGeneration = new AppGeneration();
 let apps = [];
-let dockApps = ["vsCode", "browser", "file-explorer"];
-let OSClass;
 
+//Make communcation socket between iframe and software
 function openAppRequest([requestingApp, appToOpen]) {
   $("#main-application-container").append(
     DomDefaults.openAppPopup(requestingApp, appToOpen)
@@ -38,49 +36,17 @@ function loadAllApps() {
   });
 }
 
-function initApps() {
-  dockApps.forEach(async (page) => {
-    const html = `
-      <object class='app' data="./apps/${page}/app-icon.svg" type="image/png" onclick='openApp("${page}")'>
-        <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${page}")'>
-      </object>`;
-
-    $("#normal-apps").append(html);
-  });
-
-  fetch("./js/userAvailable/operatingSystem.js")
-    .then((res) => res.text())
-    .then(
-      (data) => (OSClass = appGeneration.getBlobURL(data, "text/javascript"))
-    );
-}
-
-async function getAllApps() {
-  $.get("./php/getAppDefaultAppDirectories.php", (result) => {
-    result = JSON.parse(result);
-
-    Array.from(result).forEach((val) => apps.push(val.split("//")[1]));
-
-    initApps(apps);
-  });
-}
-
 async function openApp(app) {
-  if ($(`#${app}`).length) return;
-
-  let appFiles = [];
-
-  await $.post(
+  let appFiles = await $.post(
     "./php/discoverAppFiles.php",
     {
       filePath: `../apps/${app}/src`,
     },
-    (data) => (appFiles = JSON.parse(data))
+    (data) => data
   );
 
-  appGeneration.generateBlobFiles(appFiles, app);
-  let headPart = appGeneration.computeHtmlHead(OSClass);
-  let iframe = appGeneration.generateFinalApp(headPart, app);
+  let utils = new WindowUtils(app, JSON.parse(appFiles));
+  let iframe = utils.init();
 
   let window = new AppWindow({ title: app });
   window.init();
