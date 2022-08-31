@@ -16,4 +16,11 @@ class Utils {
     });
     return JSON.parse(test);
   }
+  static updateTime() {
+    let currentDate = new Date();
+    let currentTime = currentDate.getHours() + ":" + currentDate.getMinutes();
+    $("#current-date-time").text(
+      currentDate.toDateString() + " " + currentTime
+    );
+  }
 }

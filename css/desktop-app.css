@@ -25,7 +25,6 @@
 }
 
 .app-top-header {
-  position: absolute;
   z-index: 10;
   height: 25px;
   margin-top: -25px;

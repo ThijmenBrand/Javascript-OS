@@ -4,6 +4,23 @@ class Startup {
     this.dockApps = options.dockApps;
   }
 
+  initOperatingSystem() {
+    CommunicationSocket.listenToCommunication();
+    this.getAllApps();
+    Utils.updateTime();
+
+    onresize = (event) => {
+      let pageWidth = window.innerWidth;
+      $("#display-too-small").css(
+        "display",
+        pageWidth >= 1000 ? "none" : "block"
+      );
+    };
+    setInterval(() => {
+      Utils.updateTime();
+    }, 1000);
+  }
+
   getAllApps() {
     $.get("./php/getAppDefaultAppDirectories.php", (result) => {
       result = JSON.parse(result);

@@ -25,7 +25,7 @@ class CreateWindow {
     let appFiles = await Utils.discoverAppFiles(this.attrs.title);
 
     let utils = new WindowUtils(this.attrs.title, appFiles, {
-      height: this.AppDefaultOptions.width,
+      height: this.AppDefaultOptions.height,
       width: this.AppDefaultOptions.width,
     });
     this.windowContent = utils.init();

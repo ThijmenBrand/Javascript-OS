@@ -17,7 +17,6 @@ class WindowUtils {
   };
 
   init() {
-    console.log(this.dims);
     this.generateBlobFiles();
     let headPart = this.computeHtmlHead();
     return this.generateFinalApp(headPart, this.app);
@@ -82,7 +81,7 @@ class WindowUtils {
 
     let iframe = `<iframe id='${app}' class='app-iframe' style="height: ${
       this.dims.height
-    }px;width: ${this.dims.width}px;" src='${Utils.getBlobURL(
+    }px; width: ${this.dims.width}px;" src='${Utils.getBlobURL(
       source,
       "text/html"
     )}'></iframe>`;

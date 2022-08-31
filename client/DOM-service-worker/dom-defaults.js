@@ -11,15 +11,15 @@ class DomDefaults {
         </div>`;
   }
   static appIcon(app) {
-    return `<object class='app' data="./apps/${app}/app-icon.svg" type="image/png" onclick='openApp("${app}")'>
-              <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${app}")'>
+    return `<object class='app' data="./apps/${app}/app-icon.svg" type="image/png" onclick='WindowRegister.openApp("${app}")'>
+              <img class='app' src='./assets/default-app-icon.svg' onclick='WindowRegister.openApp("${app}")'>
             </object>`;
   }
   static appIconWithNameLabel(app) {
     return `
-    <span class='app-name-combination' onclick='openApp("${app}");showAllAppDock()'>
+    <span class='app-name-combination' onclick='WindowRegister.openApp("${app}");showAllAppDock()'>
       <object class='app app-in-all-apps' data="./apps/${app}/app-icon.svg" type="image/png">
-        <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${app}")'>
+        <img class='app' src='./assets/default-app-icon.svg' onclick='WindowRegister.openApp("${app}")'>
       </object>
       <p>${app}</p>
     </span>`;
