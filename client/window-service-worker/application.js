@@ -6,6 +6,8 @@ class Application {
     this.attrs = {
       title: options.title,
       icon: options.icon,
+      height: options.height || 400,
+      width: options.width || 700,
     };
     this.type = "Application";
     this.application = this.createApplication();
@@ -13,12 +15,17 @@ class Application {
   async createApplication() {
     let appFiles = await this.discoverAppFiles();
 
-    let utils = new WindowUtils(this.attrs.title, appFiles);
+    let utils = new WindowUtils(this.attrs.title, appFiles, "test123");
     let iframe = utils.init();
 
     let window = new AppWindow({
       title: this.attrs.title,
-      options: { icon: this.attrs.icon, height: 400, width: 700, type: "app" },
+      options: {
+        icon: this.attrs.icon,
+        height: this.attrs.height,
+        width: this.attrs.width,
+        type: "app",
+      },
     });
     window.init();
     window.render(iframe);

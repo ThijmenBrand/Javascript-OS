@@ -15,4 +15,27 @@ class DomDefaults {
               <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${app}")'>
             </object>`;
   }
+  static appIconWithNameLabel(app) {
+    return `
+    <span class='app-name-combination' onclick='openApp("${app}");showAllAppDock()'>
+      <object class='app app-in-all-apps' data="./apps/${app}/app-icon.svg" type="image/png">
+        <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${app}")'>
+      </object>
+      <p>${app}</p>
+    </span>`;
+  }
+  static openAppDialog(requestingApp) {
+    return `<div>
+              <span>With wich app would you like op open this file?</span>
+              <span>
+                <select>
+                  <option value="option1">option1</option>
+                  <option value="option2">option2</option>
+                </select>
+              </span>
+              <span>
+                <button>Open</button>
+              </span>
+            </div>`;
+  }
 }

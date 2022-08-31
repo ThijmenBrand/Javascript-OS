@@ -1,10 +1,11 @@
 class WindowUtils {
-  constructor(app, appFiles) {
+  constructor(app, appFiles, dims) {
     this.appBundle = {
       css: [],
       js: [],
       indexFile: "",
     };
+    this.dims = dims;
     this.appFiles = appFiles;
     this.app = app;
     this.operatingSystemClass = coreVars.userAvailableOperatingSystemClass;
@@ -16,6 +17,7 @@ class WindowUtils {
   };
 
   init() {
+    console.log(this.dims);
     this.generateBlobFiles();
     let headPart = this.computeHtmlHead();
     return this.generateFinalApp(headPart, this.app);
@@ -40,16 +42,10 @@ class WindowUtils {
       );
 
       if (file.fileType == "css") {
-        this.appBundle.css.push({
-          fileContent: file.fileContent,
-          fileURL: blobURL,
-        });
+        this.appBundle.css.push(blobURL);
       }
       if (file.fileType == "js") {
-        this.appBundle.js.push({
-          fileContent: file.fileContent,
-          fileURL: blobURL,
-        });
+        this.appBundle.js.push(blobURL);
       }
       if (file.fileType == "html")
         this.appBundle.indexFile = this.replaceImages(
@@ -59,14 +55,14 @@ class WindowUtils {
     });
   }
   computeHtmlHead() {
-    let headPart = `<script src="${this.operatingSystemClass}"></script>`;
+    let headPart = `<script data-app-script="${this.app}" id="os-script" src="${this.operatingSystemClass}"></script>`;
 
     this.appBundle.css.forEach(
       (file) =>
-        (headPart += `<link rel="stylesheet" type="text/css" href="${file.fileURL}" />`)
+        (headPart += `<link rel="stylesheet" type="text/css" href="${file}" />`)
     );
     this.appBundle.js.forEach(
-      (file) => (headPart += `<script src="${file.fileURL}"></script>`)
+      (file) => (headPart += `<script src="${file}"></script>`)
     );
 
     return headPart;
@@ -75,7 +71,6 @@ class WindowUtils {
     const source = `
               <html>
                 <head>
-                  <script src="https://thijmenbrand.nl/website/desktop-website/js/userAvailable/operatingSystem.js"></script>
                   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
                   ${headPart}
                 </head>
@@ -85,7 +80,9 @@ class WindowUtils {
               </html>
             `;
 
-    let iframe = `<iframe id='${app}' class='app-iframe' src='${Utils.getBlobURL(
+    let iframe = `<iframe id='${app}' class='app-iframe' style="height: ${
+      this.dims.height
+    }px;width: ${this.dims.width}px;" src='${Utils.getBlobURL(
       source,
       "text/html"
     )}'></iframe>`;

@@ -3,11 +3,6 @@ let apps = [];
 /*
   TODO: make a communcation socket between app and the software
 */
-function openAppRequest([requestingApp, appToOpen]) {
-  $("#main-application-container").append(
-    DomDefaults.openAppPopup(requestingApp, appToOpen)
-  );
-}
 
 function showAllAppDock() {
   let allAppsElementIsVisible = $("#all-apps-container").hasClass(
@@ -26,21 +21,38 @@ function showAllAppDock() {
 
 function loadAllApps() {
   apps.forEach(async (page) => {
-    const html = `
-      <span class='app-name-combination' onclick='openApp("${page}");showAllAppDock()'>
-        <object class='app app-in-all-apps' data="./apps/${page}/app-icon.svg" type="image/png">
-          <img class='app' src='./assets/default-app-icon.svg' onclick='openApp("${page}")'>
-        </object>
-        <p>${page}</p>
-      </span>`;
-
-    $("#all-apps").append(html);
+    const html = DomDefaults.appIconWithNameLabel(page);
+    DomWorker.init("all-apps").mount(html);
   });
 }
 
-async function openApp(app) {
-  new CreateWindow({
+function sendDataToApp(app, data) {
+  appElement = DomWorkerUtils.elementExistsOnDom(app, false);
+  if (!appElement) return;
+
+  DomWorkerUtils.waitForElm(app).then(() => {
+    appElement.contentWindow.postMessage(
+      { target: app, content: "test123" },
+      "*"
+    );
+  });
+}
+
+async function openApp(app, dataRequest = false, content = "") {
+  await new CreateWindow({
     title: app,
     icon: `apps/${app}/app-icon.svg`,
-  }).createApplication();
+  })
+    .application()
+    .then((e) => e.initWindow());
+
+  if (dataRequest) sendDataToApp(app, dataRequest);
+}
+
+function openDialog(params = null) {
+  new CreateWindow({
+    title: "Dialog",
+  })
+    .dialog("openAppDialog")
+    .initWindow();
 }

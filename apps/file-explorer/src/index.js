@@ -26,5 +26,5 @@ function openFileOrDir(filePath = "", fileType = "") {
     return;
   }
 
-  operatingSystem.call();
+  operatingSystem.call.openApplication("notepad");
 }

@@ -1,8 +1,41 @@
 class operatingSystem {
   //CommunicationSocket
-  static call() {
-    window.top.postMessage("test123", "*");
+  static #app() {
+    let scripts = document
+      .getElementById("os-script")
+      .getAttribute("data-app-script");
+
+    return scripts;
   }
+  static listeningImplementation(callback) {
+    window.onmessage = (e) => {
+      if (e.data.target != this.#app()) return;
+      callback(e.data.content);
+    };
+  }
+  static #message = {
+    method: null,
+    params: null,
+  };
+  static #send() {
+    window.top.postMessage(this.#message, "https://thijmenbrand.nl");
+  }
+  static call = {
+    openDialog: () => {
+      this.#message = {
+        method: "openDialog",
+        params: "",
+      };
+      this.#send();
+    },
+    openApplication: (targetApplication) => {
+      this.#message = {
+        method: "openApp",
+        params: targetApplication,
+      };
+      this.#send();
+    },
+  };
   //File things
   static #baseFilePath =
     "https://www.thijmenbrand.nl/website/desktop-website/php/index.php/";

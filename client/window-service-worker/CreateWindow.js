@@ -3,6 +3,9 @@ class CreateWindow {
     this.attrs = attrs;
   }
 
+  windowContent = null;
+  windowOptions = null;
+
   AppDefaultOptions = {
     height: 400,
     width: 700,
@@ -14,32 +17,42 @@ class CreateWindow {
     type: "dialog",
   };
 
-  async createApplication() {
+  dialogTypes = {
+    openAppDialog: DomDefaults.openAppDialog("test"),
+  };
+
+  async application() {
     let appFiles = await Utils.discoverAppFiles(this.attrs.title);
 
-    let utils = new WindowUtils(this.attrs.title, appFiles);
-    let iframe = utils.init();
+    let utils = new WindowUtils(this.attrs.title, appFiles, {
+      height: this.AppDefaultOptions.width,
+      width: this.AppDefaultOptions.width,
+    });
+    this.windowContent = utils.init();
 
-    this.initWindow(iframe, this.AppDefaultOptions);
+    this.windowOptions = this.AppDefaultOptions;
+
+    return this;
   }
-  createDialog() {
-    let html = "<h1>test123</h1>";
+  dialog(dialogType) {
+    this.windowContent = this.dialogTypes[dialogType];
+    this.windowOptions = this.DialogDefaultOptions;
 
-    this.initWindow(html, this.DialogDefaultOptions);
+    return this;
   }
 
-  initWindow(windowContent, windowOptions) {
+  async initWindow() {
     let window = new AppWindow({
       title: this.attrs.title,
       options: {
         icon: this.attrs.icon,
-        height: windowOptions.height,
-        width: windowOptions.width,
-        type: windowOptions.type,
+        height: this.windowOptions.height,
+        width: this.windowOptions.width,
+        type: this.windowOptions.type,
       },
     });
     window.init();
-    window.render(windowContent);
+    window.render(this.windowContent);
 
     let windowBehaviour = new WindowBehaviour();
     windowBehaviour.init(window);

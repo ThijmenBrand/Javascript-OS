@@ -20,7 +20,7 @@ window.onmessage = (e) => {
   let senderApp = e.path[0].document.activeElement.id;
   if (!windows.find((win) => win.title === senderApp)) return;
 
-  console.log(windows);
+  window[e.data.method](e.data.params, true, "test123");
 };
 
 onresize = (event) => {
