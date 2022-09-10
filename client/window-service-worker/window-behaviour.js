@@ -43,3 +43,4 @@ class WindowBehaviour {
     win.$header.classList.remove("window-full-screen");
   }
 }
+

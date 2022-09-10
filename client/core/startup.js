@@ -1,3 +1,20 @@
+const registeredApps = [
+  {
+    title: "file explorer",
+    iconLocation: "userFiles/C/Program-files/file-explorer/file-explorer.svg",
+    ExecuteLocation:
+      "userFiles/C/Program-files/file-explorer/file-explorer.html",
+    type: "app",
+  },
+  {
+    title: "app compiler",
+    iconLocation:
+      "userFiles/C/Program-files/app-compiler/app-compiler-icon.svg",
+    ExecuteLocation: "userFiles/C/Program-files/app-compiler/app-compiler.html",
+    type: "app",
+  },
+];
+
 class Startup {
   constructor(options) {
     this.apps = [];
@@ -6,7 +23,7 @@ class Startup {
 
   initOperatingSystem() {
     CommunicationSocket.listenToCommunication();
-    this.getAllApps();
+    this.initIcons();
     Utils.updateTime();
 
     onresize = (event) => {
@@ -21,20 +38,9 @@ class Startup {
     }, 1000);
   }
 
-  getAllApps() {
-    $.get("./php/getAppDefaultAppDirectories.php", (result) => {
-      result = JSON.parse(result);
-
-      Array.from(result).forEach((val) => apps.push(val.split("//")[1]));
-
-      this.initApps();
-    });
-  }
-  initApps() {
-    this.dockApps.forEach(async (app) => {
-      const html = DomDefaults.appIcon(app);
-
-      $("#normal-apps").append(html);
+  initIcons() {
+    registeredApps.forEach(async (app) => {
+      new IconBehaviour(new AppIcon(app));
     });
   }
 }

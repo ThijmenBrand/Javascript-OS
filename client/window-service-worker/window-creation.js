@@ -1,10 +1,7 @@
 class CreateWindow {
-  constructor(attrs) {
-    this.attrs = attrs;
-  }
-
   windowContent = null;
   windowOptions = null;
+  metaData = null;
 
   AppDefaultOptions = {
     height: 400,
@@ -21,16 +18,10 @@ class CreateWindow {
     openAppDialog: DomDefaults.openAppDialog("test"),
   };
 
-  async application() {
-    let appFiles = await Utils.discoverAppFiles(this.attrs.title);
-
-    let utils = new WindowUtils(this.attrs.title, appFiles, {
-      height: this.AppDefaultOptions.height,
-      width: this.AppDefaultOptions.width,
-    });
-    this.windowContent = utils.init();
-
+  application(appData) {
+    this.metaData = appData;
     this.windowOptions = this.AppDefaultOptions;
+    this.windowContent = `<iframe id='${appData.title}' class='app-iframe' style="height: ${this.windowOptions.height}px; width: ${this.windowOptions.width}px;" src='${appData.ExecuteLocation}'></iframe>`;
 
     return this;
   }
@@ -43,13 +34,11 @@ class CreateWindow {
 
   async initWindow() {
     let window = new AppWindow({
-      title: this.attrs.title,
-      options: {
-        icon: this.attrs.icon,
-        height: this.windowOptions.height,
-        width: this.windowOptions.width,
-        type: this.windowOptions.type,
-      },
+      title: this.metaData.title,
+      iconLocation: this.metaData.iconLocation,
+      height: this.windowOptions.height,
+      width: this.windowOptions.width,
+      type: this.windowOptions.type,
     });
     window.init();
     window.render(this.windowContent);

@@ -28,28 +28,33 @@ class operatingSystem {
       };
       this.#send();
     },
-    openApplication: (targetApplication) => {
+    openApplication: (args) => {
       this.#message = {
-        method: "openApp",
-        params: targetApplication,
+        method: "Communication.openAppRequest",
+        params: args,
+      };
+      this.#send();
+    },
+    sendToApplication: (args) => {
+      this.#message = {
+        method: "Communication.sendToApplication",
+        params: args,
+      };
+      this.#send();
+    },
+    showFilesInDir: (dir) => {
+      this.#message = {
+        method: "Communication.showFilesInDir",
+        params: dir,
+      };
+      this.#send();
+    },
+    openFile: (dir) => {
+      this.#message = {
+        method: "Communication.openFile",
+        params: dir,
       };
       this.#send();
     },
   };
-  //File things
-  static #baseFilePath =
-    "https://www.thijmenbrand.nl/website/desktop-website/php/index.php/";
-  static async showFilesInDIR(dir = "") {
-    let targetDir = "../userFiles/" + dir;
-    return await $.get(
-      this.#baseFilePath + `filesystem/showUserFiles?dir=${targetDir}`,
-      (res) => res
-    );
-  }
-  static async openUserFile(dir) {
-    return await $.get(
-      this.#baseFilePath + `filesystem/openFile?dir=${dir}`,
-      (res) => res
-    );
-  }
 }

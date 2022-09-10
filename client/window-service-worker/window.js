@@ -2,28 +2,14 @@ let windows = [];
 let windowCount = 0;
 let lastWindow;
 
-const windowTemplate = `<div id="inner-app-container" class="app-page inner-app-container">
-                            <div class="app-top-header javascript-os-header" id="app-placeholder-app-top-header">
-                                <div class="app-options">
-                                    <div class="ball red js-os-app-option" id="app-close" data-action="close"></div>
-                                    <div class="ball orange js-os-app-option" id="app-smaller" data-action="minimize"></div>
-                                    <div class="ball green js-os-app-option" id="app-bigger" data-action="maximize"></div>
-                                </div>
-                                <div class="javascript-os-title"></div>
-                                <div class="javascript-os-icon"><div class="javascript-os-inner-icon"></div></div>
-                            </div>
-                            <div id="javascript-os-content" class="javascript-os-content">
-                            </div>
-                        </div>`;
-
 class AppWindow {
-  constructor(attrs) {
+  constructor(args) {
     windowCount++;
     this.options = {
-      icon: attrs.options.icon,
-      width: attrs.options.width,
-      height: attrs.options.height,
-      type: attrs.options.type,
+      iconLocation: args.iconLocation,
+      width: args.width,
+      height: args.height,
+      type: args.type,
     };
     this.inited = false;
     this.$element = null;
@@ -31,7 +17,7 @@ class AppWindow {
     this.$header = null;
     this.$icon = null;
     this.$title = null;
-    this.title = attrs.title;
+    this.title = args.title;
   }
 
   init() {
@@ -41,7 +27,7 @@ class AppWindow {
   }
 
   initTemplate() {
-    this.$element = Utils.createElementFromHTML(windowTemplate);
+    this.$element = Utils.createElementFromHTML(DomDefaults.appWindow());
 
     this.$content = this.$element.querySelector(".javascript-os-content");
     this.$header = this.$element.querySelector(".javascript-os-header");
@@ -62,7 +48,7 @@ class AppWindow {
   }
   updateUI() {
     this.$title.innerHTML = this.title;
-    this.$icon.style.backgroundImage = `url('${this.options.icon}')`;
+    this.$icon.style.backgroundImage = `url('${this.options.iconLocation}')`;
   }
   updateBarOptions() {
     if (this.options.type == "dialog") {

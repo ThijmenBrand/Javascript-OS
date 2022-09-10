@@ -1,0 +1,120 @@
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+</head>
+
+<body>
+    <div class="main-files" id="main-files">
+        <button onclick="sendBack()">Send</button>
+    </div>
+</body>
+<script id="os-script" data-app-script="file explorer">
+    class operatingSystem {
+        //CommunicationSocket
+        static #app() {
+            let scripts = document
+                .getElementById("os-script")
+                .getAttribute("data-app-script");
+
+            return scripts;
+        }
+        static listeningImplementation(callback) {
+            window.onmessage = (e) => {
+                if (e.data.target != this.#app()) return;
+                callback(e.data.content);
+            };
+        }
+        static #message = {
+            method: null,
+            params: null,
+        };
+        static #send() {
+            window.top.postMessage(this.#message, "https://thijmenbrand.nl");
+        }
+        static call = {
+            openDialog: () => {
+                this.#message = {
+                    method: "openDialog",
+                    params: "",
+                };
+                this.#send();
+            },
+            openApplication: (args) => {
+                this.#message = {
+                    method: "Communication.openAppRequest",
+                    params: args,
+                };
+                this.#send();
+            },
+            sendToApplication: (args) => {
+                this.#message = {
+                    method: "Communication.sendToApplication",
+                    params: args,
+                }
+                this.#send();
+            },
+            showFilesInDir: (dir) => {
+                this.#message = {
+                    method: "Communication.showFilesInDir",
+                    params: dir,
+                };
+                this.#send();
+            },
+            openFile: (dir) => {
+                this.#message = {
+                    method: "Communication.openFile",
+                    params: dir,
+                };
+                this.#send();
+            },
+        };
+    }
+
+</script>
+<script>
+
+    function sendBack() {
+        operatingSystem.call.sendToApplication({ targetApp: "app compiler", message: "D/testFile.txt" });
+    }
+
+    function callback(e) {
+        if (e.message === "type-select") {
+            console.log("wioee")
+        }
+    }
+
+    operatingSystem.listeningImplementation(callback)
+
+    // getDirs();
+
+    const preventReload = "reload";
+
+    // function getDirs(filePath = "") {
+    //     $("#main-files").empty();
+
+    //     operatingSystem.showFilesInDir(filePath).then((res) => {
+    //         if (!res.length) {
+    //             $("#main-files").html("<p>this dir is empty</p>");
+    //             return;
+    //         }
+    //         res.forEach((element) => {
+    //             $("#main-files").append(
+    //                 `<p onclick='openFileOrDir("${element.filePath}", "${element.fileType
+    //                 }")'>${element.filePath.split("/").at(-1)}</p>`
+    //             );
+    //         });
+    //     });
+    // }
+
+    function openFileOrDir(filePath = "", fileType = "") {
+        if (fileType == "dir") {
+            getDirs(filePath);
+            return;
+        }
+
+        operatingSystem.call.openApplication({
+            app: "notepad",
+            dataRequest: "applePie",
+        });
+    }
+
+</script>

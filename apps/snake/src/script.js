@@ -57,7 +57,6 @@ class Snake {
   initSnake(initalLength) {
     this.location = { x: 80, y: 80 };
     this.cords = [{ x: this.location.x, y: this.location.y }];
-    //TODO make this random. or x or y moving
     this.moveSpeed = { x: 20, y: 0, speed: 20 };
     this.length = initalLength;
 

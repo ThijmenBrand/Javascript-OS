@@ -1,10 +1,8 @@
-const options = {
-  dockApps: ["vsCode", "browser", "file-explorer"],
-};
+const options = {};
+// AppBuilder.BuildApp("userFiles/C/Program-files/app-compiler/app-compiler.html");
 let apps = [];
 let startup = new Startup(options);
 startup.initOperatingSystem();
-let coreVars = new CoreVariables();
 
 function showAllAppDock() {
   let allAppsElementIsVisible = $("#all-apps-container").hasClass(
@@ -21,9 +19,9 @@ function showAllAppDock() {
   loadAllApps();
 }
 
-function loadAllApps() {
-  apps.forEach(async (page) => {
-    const html = DomDefaults.appIconWithNameLabel(page);
-    DomWorker.init("all-apps").mount(html);
-  });
-}
+// function loadAllApps() {
+//   apps.forEach(async (page) => {
+//     const html = DomDefaults.appIconWithNameLabel(page);
+//     DomWorker.init("all-apps").mount(html);
+//   });
+// }

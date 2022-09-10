@@ -1,4 +1,9 @@
-<div>
+<head>
+    <title>VsCode</title>
+    <link href="./vsCode.css" rel="stylesheet" />
+</head>
+
+<body>
     <div class="left-side-app menu">
         <div id="vs-code-right-click-menu">
             <div class="vs-code-right-click-menu-option" onclick="newUserFile('file')">New file</div>
@@ -33,7 +38,7 @@
         <div id="editor">
         </div>
     </div>
-</div>
+</body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.9.5/ace.js"
     integrity="sha512-wju2wMXmukx2760GKQBjykvRNeRY8LdMn6XnMPJQKRF7olV229IytqfkW9Z83lrdCVA168r4Ut4paNoRxJWoag=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -41,9 +46,8 @@
     integrity="sha512-/oSfwUJCxwgdtedk6k9hQ93S+10NIHXNLDyTNej541YIegjr7tFLkBsA4rj0GfMGp4r+GCSjXqUJOwjebfVJDA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="./code-editor.js" type="text/javascript" charset="utf-8"></script>
+<script src="./vccode-explorer.js" type="text/javascript" charset="utf-8"></script>
 <script>
     let editor = ace.edit("editor");
     initEditor()
 </script>
-
-<!--https://ace.c9.io/#nav=howto&api=editor-->

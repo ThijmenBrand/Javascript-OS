@@ -1,0 +1,99 @@
+<head>
+
+</head>
+
+<body>
+    <button id="find-file" onclick="findFile()">Open file</button>
+    <label for="app-path">App path</label>
+    <input id="app-path" type="text" name="app-path" placeholder="base: userfiles">
+    <button id="compile-btn" onclick="compileApp()">Compile</button>
+</body>
+<script id="os-script" data-app-script="app compiler">
+    class operatingSystem {
+        //CommunicationSocket
+        static #app() {
+            let scripts = document
+                .getElementById("os-script")
+                .getAttribute("data-app-script");
+
+            return scripts;
+        }
+        static listeningImplementation(callback) {
+            window.onmessage = (e) => {
+                if (e.data.target != this.#app()) return;
+                callback(e.data.content);
+            };
+        }
+        static #message = {
+            method: null,
+            params: null,
+        };
+        static #send() {
+            window.top.postMessage(this.#message, "https://thijmenbrand.nl");
+        }
+        static call = {
+            openDialog: () => {
+                this.#message = {
+                    method: "openDialog",
+                    params: "",
+                };
+                this.#send();
+            },
+            openApplication: (args) => {
+                this.#message = {
+                    method: "Communication.openAppRequest",
+                    params: args,
+                };
+                this.#send();
+            },
+            sendToApplication: (args) => {
+                this.#message = {
+                    method: "Communication.sendToApplication",
+                    params: args,
+                }
+                this.#send();
+            },
+            showFilesInDir: (dir) => {
+                this.#message = {
+                    method: "Communication.showFilesInDir",
+                    params: dir,
+                };
+                this.#send();
+            },
+            openFile: (dir) => {
+                this.#message = {
+                    method: "Communication.openFile",
+                    params: dir,
+                };
+                this.#send();
+            },
+        };
+    }
+</script>
+<script>
+    let compileBtn = document.getElementById('compile-btn')
+    let inputField = document.getElementById('app-path')
+
+    function callback(e) {
+        if (e.sender === "file explorer") {
+            inputField.value = e.message
+        }
+        if (e.sender === "system") {
+            console.log(e.message);
+        }
+    }
+
+    operatingSystem.listeningImplementation(callback)
+
+    function compileApp() {
+        let appPath = inputField.value;
+
+
+        operatingSystem.call.openFile(appPath)
+    }
+    function findFile() {
+        operatingSystem.call.openApplication({ targetApp: "file explorer" })
+        operatingSystem.call.sendToApplication({ targetApp: "file explorer", message: "type-select" })
+    }
+
+</script>
