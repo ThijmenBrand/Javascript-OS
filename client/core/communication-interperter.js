@@ -1,13 +1,13 @@
 class Communication {
   //File system
-  static async showFilesInDir(args) {
-    let targetDir = "../userFiles/" + args.params;
+  static async showFilesInDir(path = "") {
+    let targetDir = "../userFiles/" + path;
     let result = await $.get(
       `https://www.thijmenbrand.nl/website/desktop-website/php/index.php/filesystem/showUserFiles?dir=${targetDir}`,
       (res) => res
     );
 
-    CommunicationSocket.sendDataToApp(args.requestingApp, result, "system");
+    return result;
   }
   static async openFile(args) {
     let targetDir = "../userFiles/" + args.params;

@@ -1,8 +1,25 @@
+import Startup from "../client/core/startup.js";
+import FileIcon from "../client/app-regestry/file-icon/file-icon.js";
+
 const options = {};
 // AppBuilder.BuildApp("userFiles/C/Program-files/app-compiler/app-compiler.html");
-let apps = [];
+
 let startup = new Startup(options);
 startup.initOperatingSystem();
+
+showFilesOnDesktop();
+
+async function showFilesOnDesktop() {
+  Communication.showFilesInDir("D/desktop").then((res) => {
+    Array.from(res).forEach((file) => {
+      new FileIcon(file.filePath.split("../").at(-1));
+    });
+  });
+
+  // desktopFiles.foreach((file) => {
+  //   new FileIcon(file.filePath);
+  // });
+}
 
 function showAllAppDock() {
   let allAppsElementIsVisible = $("#all-apps-container").hasClass(
@@ -18,10 +35,3 @@ function showAllAppDock() {
   $("#all-apps-container").addClass("all-apps-visible");
   loadAllApps();
 }
-
-// function loadAllApps() {
-//   apps.forEach(async (page) => {
-//     const html = DomDefaults.appIconWithNameLabel(page);
-//     DomWorker.init("all-apps").mount(html);
-//   });
-// }

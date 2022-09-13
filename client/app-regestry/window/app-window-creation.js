@@ -1,3 +1,7 @@
+import WindowBehaviour from "./app-window-behaviour.js";
+import AppWindow from "./app-window.js";
+import DomDefaults from "../../dom/dom-defaults.js";
+
 class CreateWindow {
   windowContent = null;
   windowOptions = null;
@@ -18,7 +22,7 @@ class CreateWindow {
     openAppDialog: DomDefaults.openAppDialog("test"),
   };
 
-  application(appData) {
+  async application(appData) {
     this.metaData = appData;
     this.windowOptions = this.AppDefaultOptions;
     this.windowContent = `<iframe id='${appData.title}' class='app-iframe' style="height: ${this.windowOptions.height}px; width: ${this.windowOptions.width}px;" src='${appData.ExecuteLocation}'></iframe>`;
@@ -40,10 +44,12 @@ class CreateWindow {
       width: this.windowOptions.width,
       type: this.windowOptions.type,
     });
-    window.init();
+    window.initTemplate();
     window.render(this.windowContent);
 
     let windowBehaviour = new WindowBehaviour();
     windowBehaviour.init(window);
   }
 }
+
+export default CreateWindow;

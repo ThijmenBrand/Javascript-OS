@@ -1,4 +1,7 @@
-let windows = [];
+import DomDefaults from "../../dom/dom-defaults.js";
+import Utils from "../../utils/utils.js";
+
+export let windows = [];
 let windowCount = 0;
 let lastWindow;
 
@@ -18,12 +21,6 @@ class AppWindow {
     this.$icon = null;
     this.$title = null;
     this.title = args.title;
-  }
-
-  init() {
-    if (this.inited) return;
-
-    this.initTemplate();
   }
 
   initTemplate() {
@@ -67,3 +64,5 @@ class AppWindow {
     windows.push(this);
   }
 }
+
+export default AppWindow;

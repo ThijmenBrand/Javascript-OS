@@ -44,3 +44,4 @@ class WindowBehaviour {
   }
 }
 
+export default WindowBehaviour;

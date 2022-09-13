@@ -1,0 +1,10 @@
+{
+  "type": "application",
+  "title": "Explorer",
+  "autostart": false,
+  "icon": "userFiles/C/Program-files/file-explorer/file-explorer.svg",
+  "mimes": ["text/plain", "image/png"],
+  "state": "dev",
+  "fileLocation": "userFiles/C/Program-files/file-explorer/file-explorer.html",
+  "iconState": 0
+}

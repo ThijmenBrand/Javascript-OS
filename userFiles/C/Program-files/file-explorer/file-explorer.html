@@ -7,114 +7,54 @@
         <button onclick="sendBack()">Send</button>
     </div>
 </body>
-<script id="os-script" data-app-script="file explorer">
-    class operatingSystem {
-        //CommunicationSocket
-        static #app() {
-            let scripts = document
-                .getElementById("os-script")
-                .getAttribute("data-app-script");
 
-            return scripts;
-        }
-        static listeningImplementation(callback) {
+<script>
+    class OS {
+        listen(callback) {
             window.onmessage = (e) => {
-                if (e.data.target != this.#app()) return;
-                callback(e.data.content);
-            };
+                callback(e);
+            }
         }
-        static #message = {
-            method: null,
-            params: null,
-        };
-        static #send() {
-            window.top.postMessage(this.#message, "https://thijmenbrand.nl");
+        call(method, params, callback) {
+            window.top.postMessage({
+                method: method,
+                params: params,
+            }, "https://thijmenbrand.nl");
+
+            this.listen(callback)
         }
-        static call = {
-            openDialog: () => {
-                this.#message = {
-                    method: "openDialog",
-                    params: "",
-                };
-                this.#send();
-            },
-            openApplication: (args) => {
-                this.#message = {
-                    method: "Communication.openAppRequest",
-                    params: args,
-                };
-                this.#send();
-            },
-            sendToApplication: (args) => {
-                this.#message = {
-                    method: "Communication.sendToApplication",
-                    params: args,
-                }
-                this.#send();
-            },
-            showFilesInDir: (dir) => {
-                this.#message = {
-                    method: "Communication.showFilesInDir",
-                    params: dir,
-                };
-                this.#send();
-            },
-            openFile: (dir) => {
-                this.#message = {
-                    method: "Communication.openFile",
-                    params: dir,
-                };
-                this.#send();
-            },
-        };
     }
 
-</script>
-<script>
+    let os = new OS();
 
     function sendBack() {
-        operatingSystem.call.sendToApplication({ targetApp: "app compiler", message: "D/testFile.txt" });
+        os.call('openFile', "D/testFile.txt", (e) => console.log(e.data))
     }
 
-    function callback(e) {
-        if (e.message === "type-select") {
-            console.log("wioee")
+    function handleDirResponse(res) {
+        if (!res.length) {
+            $("#main-files").html("<p>this dir is empty</p>");
+            return;
         }
+        res.forEach((element) => {
+            $("#main-files").append(
+                `<p onclick='openFileOrDir("${element.filePath}", "${element.fileType
+                }")'>${element.filePath.split("/").at(-1)}</p>`
+            );
+        });
     }
 
-    operatingSystem.listeningImplementation(callback)
+    function getDirs(filePath = "") {
+        $("#main-files").empty();
 
-    // getDirs();
-
-    const preventReload = "reload";
-
-    // function getDirs(filePath = "") {
-    //     $("#main-files").empty();
-
-    //     operatingSystem.showFilesInDir(filePath).then((res) => {
-    //         if (!res.length) {
-    //             $("#main-files").html("<p>this dir is empty</p>");
-    //             return;
-    //         }
-    //         res.forEach((element) => {
-    //             $("#main-files").append(
-    //                 `<p onclick='openFileOrDir("${element.filePath}", "${element.fileType
-    //                 }")'>${element.filePath.split("/").at(-1)}</p>`
-    //             );
-    //         });
-    //     });
-    // }
+        operatingSystem.call.showFilesInDir(filePath)
+    }
 
     function openFileOrDir(filePath = "", fileType = "") {
         if (fileType == "dir") {
             getDirs(filePath);
             return;
         }
-
-        operatingSystem.call.openApplication({
-            app: "notepad",
-            dataRequest: "applePie",
-        });
     }
 
 </script>

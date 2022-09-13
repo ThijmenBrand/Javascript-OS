@@ -1,19 +1,5 @@
-const registeredApps = [
-  {
-    title: "file explorer",
-    iconLocation: "userFiles/C/Program-files/file-explorer/file-explorer.svg",
-    ExecuteLocation:
-      "userFiles/C/Program-files/file-explorer/file-explorer.html",
-    type: "app",
-  },
-  {
-    title: "app compiler",
-    iconLocation:
-      "userFiles/C/Program-files/app-compiler/app-compiler-icon.svg",
-    ExecuteLocation: "userFiles/C/Program-files/app-compiler/app-compiler.html",
-    type: "app",
-  },
-];
+import Utils from "../utils/utils.js";
+import CommunicationSocket from "./socket.js";
 
 class Startup {
   constructor(options) {
@@ -22,8 +8,7 @@ class Startup {
   }
 
   initOperatingSystem() {
-    CommunicationSocket.listenToCommunication();
-    this.initIcons();
+    new CommunicationSocket();
     Utils.updateTime();
 
     onresize = (event) => {
@@ -37,10 +22,6 @@ class Startup {
       Utils.updateTime();
     }, 1000);
   }
-
-  initIcons() {
-    registeredApps.forEach(async (app) => {
-      new IconBehaviour(new AppIcon(app));
-    });
-  }
 }
+
+export default Startup;

@@ -11,9 +11,14 @@ class DomDefaults {
         </div>`;
   }
   static appIcon(app) {
-    return `<object class='app javascript-os-file-icon' type="image/png">
-              <img class='app' src='./assets/default-app-icon.svg'>
-            </object>`;
+    return `
+              <div class="app javascript-os-file-icon-wrapper">
+                <object class='app javascript-os-file-icon' type="image/png">
+                  <img class='app javascript-os-fallback-icon' src='./assets/default-app-icon.svg'>
+                </object>
+                <p id="file-icon-title"></p>
+              </div>
+            `;
   }
   static appIconWithNameLabel(app) {
     return `
@@ -26,18 +31,18 @@ class DomDefaults {
   }
   static appWindow() {
     return `<div id="inner-app-container" class="app-page inner-app-container">
-    <div class="app-top-header javascript-os-header" id="app-placeholder-app-top-header">
-        <div class="app-options">
-            <div class="ball red js-os-app-option" id="app-close" data-action="close"></div>
-            <div class="ball orange js-os-app-option" id="app-smaller" data-action="minimize"></div>
-            <div class="ball green js-os-app-option" id="app-bigger" data-action="maximize"></div>
-        </div>
-        <div class="javascript-os-title"></div>
-        <div class="javascript-os-icon"><div class="javascript-os-inner-icon"></div></div>
-    </div>
-    <div id="javascript-os-content" class="javascript-os-content">
-    </div>
-</div>`;
+              <div class="app-top-header javascript-os-header" id="app-placeholder-app-top-header">
+                <div class="app-options">
+                  <div class="ball red js-os-app-option" id="app-close" data-action="close"></div>
+                  <div class="ball orange js-os-app-option" id="app-smaller" data-action="minimize"></div>
+                  <div class="ball green js-os-app-option" id="app-bigger" data-action="maximize"></div>
+                </div>
+                <div class="javascript-os-title"></div>
+                <div class="javascript-os-icon"><div class="javascript-os-inner-icon"></div></div>
+              </div>
+              <div id="javascript-os-content" class="javascript-os-content">
+              </div>
+            </div>`;
   }
   static openAppDialog(requestingApp) {
     return `<div>
@@ -53,4 +58,14 @@ class DomDefaults {
               </span>
             </div>`;
   }
+  static appIconContextWindow() {
+    return `<div>
+      <span data-action="openFile">Open</span>
+      <span data-action="openFileWith">Open with</span>
+      <span data-action="deleteFile">Delete</span>
+      <span data-action="renameFile">Rename</span>
+    </div>`;
+  }
 }
+
+export default DomDefaults;

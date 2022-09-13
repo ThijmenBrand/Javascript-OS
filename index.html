@@ -65,9 +65,8 @@
         </div>
         <section id="bottom-app-dock">
             <div class="app-dock">
-                <div class="app-bar">
-                    <img class='app' src="./assets/all-apps.svg" alt="all-apps" onclick="showAllAppDock()">
-                    <div id="normal-apps" class="normal-apps">
+                <div class="app-bar" id="bottom-app-bar">
+                    <div id="inner-app-dock" class="normal-apps">
                     </div>
                 </div>
             </div>
@@ -80,16 +79,23 @@
 </html>
 
 <!--new code-->
-<script src="./client/utils/utils.js"></script>
+
 <script src="./client/utils/app-builder.js"></script>
 <script src="./client/dom/dom-service-worker.js"></script>
-<script src="./client/core/socket.js"></script>
-<script src="./client/core/startup.js"></script>
-<script src="./client/window-service-worker/window-creation.js"></script>
-<script src="./client/window-service-worker/window-behaviour.js"></script>
-<script src="./client/app-icon-service-worker/app-icon-behaviour.js"></script>
-<script src="./client/app-icon-service-worker/app-icon.js"></script>
-<script src="./client/dom/dom-defaults.js"></script>
-<script src="./client/window-service-worker/window.js"></script>
-<script src="./js/index.js"></script>
+
 <script src="./client/core/communication-interperter.js"></script>
+
+<script type="module" src="./client/core/socket.js"></script>
+
+<script type="module" src="./client/utils/utils.js"></script>
+<script type="module" src="./client/dom/dom-defaults.js"></script>
+<script type="module" src="./client/core/startup.js"></script>
+<script type="module" src="./client/app-regestry/window/app-window-behaviour.js"></script>
+<script type="module" src="./client/app-regestry/window/app-window-creation.js"></script>
+<script type="module" src="./client/app-regestry/window/app-window.js"></script>
+
+<script type="module" src="./client/app-regestry/file-icon/file-icon.js"></script>
+<script type="module" src="./client/core/core.js"></script>
+<script type="module" src="./client/core/file-system.js"></script>
+
+<script type="module" src="./js/index.js"></script>
