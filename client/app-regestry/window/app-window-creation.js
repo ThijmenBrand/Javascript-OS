@@ -1,6 +1,7 @@
 import WindowBehaviour from "./app-window-behaviour.js";
 import AppWindow from "./app-window.js";
-import DomDefaults from "../../dom/dom-defaults.js";
+import DomDefaults from "../../static/dom-defaults.js";
+import Utils from "../../utils/utils.js";
 
 class CreateWindow {
   windowContent = null;
@@ -23,9 +24,23 @@ class CreateWindow {
   };
 
   async application(appData) {
-    this.metaData = appData;
+    /* 
+      You can provide an app instance or an config file url
+      In practice you would nearly always 
+
+    */
+
+    if (typeof appData == "string") {
+      this.fileLocation = appData;
+      [this.title, this.iconLocation] = await Utils.getAppProperties(appData);
+    } else {
+      this.title = appData.title;
+      this.iconLocation = appData.iconLocation;
+      this.fileLocation = appData.fileLocation;
+    }
+
     this.windowOptions = this.AppDefaultOptions;
-    this.windowContent = `<iframe id='${appData.title}' class='app-iframe' style="height: ${this.windowOptions.height}px; width: ${this.windowOptions.width}px;" src='${appData.ExecuteLocation}'></iframe>`;
+    this.windowContent = `<iframe id='${this.title}' class='app-iframe' style="height: ${this.windowOptions.height}px; width: ${this.windowOptions.width}px;" src='${this.fileLocation}'></iframe>`;
 
     return this;
   }
@@ -38,8 +53,8 @@ class CreateWindow {
 
   async initWindow() {
     let window = new AppWindow({
-      title: this.metaData.title,
-      iconLocation: this.metaData.iconLocation,
+      title: this.title,
+      iconLocation: this.iconLocation,
       height: this.windowOptions.height,
       width: this.windowOptions.width,
       type: this.windowOptions.type,

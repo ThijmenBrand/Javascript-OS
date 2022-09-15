@@ -1,5 +1,5 @@
 import Utils from "../utils/utils.js";
-import CommunicationSocket from "./socket.js";
+import Kernel from "./kernel.js";
 
 class Startup {
   constructor(options) {
@@ -8,7 +8,7 @@ class Startup {
   }
 
   initOperatingSystem() {
-    new CommunicationSocket();
+    new Kernel();
     Utils.updateTime();
 
     onresize = (event) => {

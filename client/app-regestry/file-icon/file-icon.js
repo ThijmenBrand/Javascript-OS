@@ -1,21 +1,15 @@
-import DomDefaults from "../../dom/dom-defaults.js";
+import DomDefaults from "../../static/dom-defaults.js";
 import CreateWindow from "../window/app-window-creation.js";
 import Utils from "../../utils/utils.js";
+import fileIcons from "./fileIcons.js";
 
 class FileIcon {
-  constructor(configFileLocation) {
-    this.config = configFileLocation;
-
-    this.title = "";
+  constructor(FileLocation) {
+    this.fileLocation = FileLocation;
     this.iconLocation = null;
-    this.ExecuteLocation = null;
-    this.type = null;
-    this.autoStart = false;
+    this.title = "";
     this.mimes = null;
-    this.inAppDock = false;
-    this.state = "dev";
-    this.iconType = 0;
-    this.inited = false;
+
     this.$element = null;
     this.$icon = null;
     this.$fallback = null;
@@ -27,15 +21,20 @@ class FileIcon {
   }
 
   async #getFileConfig() {
-    let config = await fetch(this.config).then((res) => res.json());
+    let file = this.fileLocation.split("/").at(-1);
+    let fileExt = file.split(".").at(-1);
 
-    this.title = config.title;
-    this.type = config.type;
-    this.iconLocation = config.icon;
-    this.ExecuteLocation = config.fileLocation;
-    this.state = config.state;
-    this.mimes = config.mimes;
-    this.inAppDock = config.inAppDock;
+    if (fileExt != "thijm") {
+      this.iconLocation =
+        "client/static/icons/file_type_" + fileIcons[fileExt] + ".svg";
+
+      this.title = file;
+    } else {
+      let [appTitle, appIcon] = await Utils.getAppProperties(this.fileLocation);
+
+      this.title = appTitle;
+      this.iconLocation = appIcon;
+    }
 
     this.#initIcon();
   }

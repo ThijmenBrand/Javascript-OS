@@ -1,4 +1,4 @@
-import DomDefaults from "../../dom/dom-defaults.js";
+import DomDefaults from "../../static/dom-defaults.js";
 import Utils from "../../utils/utils.js";
 
 export let windows = [];

@@ -33,6 +33,46 @@ class Utils {
       ).toString(16)
     );
   }
+  static async getAppProperties(appLocation) {
+    let appCode = await fetch(appLocation).then((res) => res.text());
+    let tmp = document.createElement("html");
+    tmp.innerHTML = appCode;
+
+    let appTitle = tmp.querySelector("meta[name='title']").content;
+    let appIcon = tmp.querySelector("meta[name='icon']").content;
+
+    return [appTitle, appIcon];
+  }
+  static elementExistsOnDom(element, throwErr = true) {
+    let elementExists = element;
+
+    typeof element == "string" &&
+      (elementExists = document.getElementById(element));
+
+    if (!elementExists && throwErr)
+      throw new Error("provided element does not exist");
+
+    return elementExists;
+  }
+  static waitForElm(selector) {
+    return new Promise((resolve) => {
+      if (document.getElementById(selector)) {
+        return resolve(document.getElementById(selector));
+      }
+
+      const observer = new MutationObserver((mutations) => {
+        if (document.getElementById(selector)) {
+          resolve(document.getElementById(selector));
+          observer.disconnect();
+        }
+      });
+
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true,
+      });
+    });
+  }
 }
 
 export default Utils;

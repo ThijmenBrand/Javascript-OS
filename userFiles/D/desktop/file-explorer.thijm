@@ -1,5 +1,8 @@
 <head>
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <meta name="title" content="Explorer" />
+    <meta name="icon" content="userFiles/C/Program-files/file-explorer/file-explorer.svg" />
+    <script src="https://code.jquery.com/jquery-3.6.0.js">
+    </script>
 </head>
 
 <body>
@@ -28,7 +31,7 @@
     let os = new OS();
 
     function sendBack() {
-        os.call('openFile', "D/testFile.txt", (e) => console.log(e.data))
+        os.call('openApp', "userFiles/D/desktop/compiler.thijm", (e) => os.call('sendDataToApp', { target: "Compiler", data: "test123" }))
     }
 
     function handleDirResponse(res) {

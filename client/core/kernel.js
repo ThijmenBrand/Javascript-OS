@@ -1,7 +1,8 @@
 import { windows } from "../app-regestry/window/app-window.js";
 import Core from "./core.js";
+import Utils from "../utils/utils.js";
 
-class CommunicationSocket {
+class Kernel {
   constructor() {
     this.#listenToCommunication();
   }
@@ -21,8 +22,9 @@ class CommunicationSocket {
     let core = new Core();
 
     switch (method) {
+      //File stuff
       case "testCommand":
-        this.sendDataToApp(targetApp, "test123", "system");
+        this.#sendDataToApp(targetApp, "test123", "system");
         break;
       case "filesInDir":
         core.fileSystem
@@ -33,6 +35,17 @@ class CommunicationSocket {
         core.fileSystem
           .openFile(params)
           .then((res) => this.#sendDataToApp(targetApp, res, "system"));
+        break;
+
+      //App stuff
+      case "openApp":
+        core.appRegistry
+          .application(params)
+          .then((e) => e.initWindow())
+          .finally(() => this.#sendDataToApp(targetApp, true, "system"));
+        break;
+      case "sendDataToApp":
+        this.#sendDataToApp(params.target, params.data, targetApp);
     }
   }
 
@@ -43,10 +56,10 @@ class CommunicationSocket {
       return: data,
     };
 
-    DomWorkerUtils.waitForElm(app).then((res) => {
+    Utils.waitForElm(app).then((res) => {
       setTimeout(() => res.contentWindow.postMessage(content, "*"), 200);
     });
   }
 }
 
-export default CommunicationSocket;
+export default Kernel;

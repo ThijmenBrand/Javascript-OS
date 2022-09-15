@@ -1,5 +1,6 @@
 import Startup from "../client/core/startup.js";
 import FileIcon from "../client/app-regestry/file-icon/file-icon.js";
+import FileSystem from "../client/core/file-system.js";
 
 const options = {};
 // AppBuilder.BuildApp("userFiles/C/Program-files/app-compiler/app-compiler.html");
@@ -10,7 +11,8 @@ startup.initOperatingSystem();
 showFilesOnDesktop();
 
 async function showFilesOnDesktop() {
-  Communication.showFilesInDir("D/desktop").then((res) => {
+  let fs = new FileSystem();
+  fs.showFilesInDir("D/desktop").then((res) => {
     Array.from(res).forEach((file) => {
       new FileIcon(file.filePath.split("../").at(-1));
     });
