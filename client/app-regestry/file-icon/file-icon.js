@@ -3,6 +3,8 @@ import CreateWindow from "../window/app-window-creation.js";
 import Utils from "../../utils/utils.js";
 import fileIcons from "./fileIcons.js";
 
+const registerdFileIcons = [];
+
 class FileIcon {
   constructor(FileLocation) {
     this.fileLocation = FileLocation;
@@ -16,6 +18,14 @@ class FileIcon {
     this.$iconTitle = null;
 
     this.$appHash = this.title + "-" + Utils.generateUUID();
+
+    this.leftBound = null;
+    this.topBound = null;
+
+    this.initalLocation = {
+      left: null,
+      top: null,
+    };
 
     this.#getFileConfig();
   }
@@ -70,11 +80,38 @@ class FileIcon {
   }
   #initMovement() {
     let dataId = this.$element.getAttribute("data-id");
+
     $(`[data-id="${dataId}"]`).draggable({
-      grid: [40, 40],
       containment: "parent",
+      // drag: this.#detectRaster(this),
+      // stop: this.#placeInRaster(this),
     });
   }
+
+  // #detectRaster(element) {
+  //   let left = element.$element.getBoundingClientRect().left;
+  //   let top = element.$element.getBoundingClientRect().top;
+
+  //   this.leftBound = Math.round(left / 100) * 100;
+  //   this.topBound = Math.round(top / 100) * 100;
+  // }
+  // #placeInRaster(element) {
+  //   registerdFileIcons.forEach((icon) => {
+  //     if (
+  //       this.leftBound === icon.leftBound &&
+  //       this.topBound === icon.topBound
+  //     ) {
+  //       element.style.left = this.initalLocation.left + "px";
+  //       element.style.top = this.initalLocation.top + "px";
+  //     }
+  //   });
+
+  //   element.$element.style.left = this.leftBound + "px";
+  //   element.$element.style.top = this.topBound + "px";
+
+  //   this.initalLocation.left = leftBound;
+  //   this.initalLocation.top = topBound;
+  // }
 
   #render() {
     this.$icon.data = this.iconLocation;
@@ -88,6 +125,10 @@ class FileIcon {
     document
       .getElementById("main-application-container")
       .appendChild(this.$element);
+
+    registerdFileIcons.push(this);
+    this.initalLocation.left = this.$element.getBoundingClientRect().left;
+    this.initalLocation.top = this.$element.getBoundingClientRect().top;
   }
 
   #openFile(ev, icon) {

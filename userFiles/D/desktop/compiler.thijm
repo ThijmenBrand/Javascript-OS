@@ -6,61 +6,42 @@
 </head>
 
 <body>
-    <p>test</p>
+    <button onclick="openApp()">open App</button>
 </body>
 
-<script>
+<script id="os-class-element" data-id="Compiler">
     class OS {
-        constructor(listenCallback = "") {
-            if (!listenCallback) return;
-
-            this.listen(listenCallback);
-        }
         listen(callback) {
             window.onmessage = (e) => {
                 callback(e);
             }
         }
         call(method, params, callback) {
+            let appName = document.getElementById("os-class-element").getAttribute("data-id")
             window.top.postMessage({
+                origin: appName,
                 method: method,
                 params: params,
             }, "https://thijmenbrand.nl");
 
-            this.listen(callback)
+            if (callback)
+                this.listen(callback)
         }
     }
+</script>
+<script>
+    let os = new OS();
 
-    let os = new OS((e) => console.log(e.data));
+    // window.addEventListener('message', (event) => {
+    //     console.log(event)
+    // });
 
-    function sendBack() {
-        os.call('openApp', "userFiles/D/desktop/file-explorer.thijm", (e) => console.log(e.data))
+    function openSelectedFile(path) {
+        os.call('openFile', path, (e) => console.log(e))
     }
 
-    function handleDirResponse(res) {
-        if (!res.length) {
-            $("#main-files").html("<p>this dir is empty</p>");
-            return;
-        }
-        res.forEach((element) => {
-            $("#main-files").append(
-                `<p onclick='openFileOrDir("${element.filePath}", "${element.fileType
-                }")'>${element.filePath.split("/").at(-1)}</p>`
-            );
-        });
-    }
-
-    function getDirs(filePath = "") {
-        $("#main-files").empty();
-
-        operatingSystem.call.showFilesInDir(filePath)
-    }
-
-    function openFileOrDir(filePath = "", fileType = "") {
-        if (fileType == "dir") {
-            getDirs(filePath);
-            return;
-        }
+    function openApp() {
+        os.call('selectFile', "", (res) => openSelectedFile(res.data.return));
     }
 
 </script>

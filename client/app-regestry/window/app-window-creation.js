@@ -8,6 +8,8 @@ class CreateWindow {
   windowOptions = null;
   metaData = null;
 
+  window = null;
+
   AppDefaultOptions = {
     height: 400,
     width: 700,
@@ -52,18 +54,18 @@ class CreateWindow {
   }
 
   async initWindow() {
-    let window = new AppWindow({
+    this.window = new AppWindow({
       title: this.title,
       iconLocation: this.iconLocation,
       height: this.windowOptions.height,
       width: this.windowOptions.width,
       type: this.windowOptions.type,
     });
-    window.initTemplate();
-    window.render(this.windowContent);
+    this.window.initTemplate();
+    this.window.render(this.windowContent);
 
     let windowBehaviour = new WindowBehaviour();
-    windowBehaviour.init(window);
+    windowBehaviour.init(this.window);
   }
 }
 

@@ -16,6 +16,7 @@
   position: absolute;
   display: inline-block;
   background-color: white;
+  z-index: 20;
 }
 
 .app-iframe {

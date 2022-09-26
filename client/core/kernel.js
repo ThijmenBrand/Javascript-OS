@@ -2,6 +2,8 @@ import { windows } from "../app-regestry/window/app-window.js";
 import Core from "./core.js";
 import Utils from "../utils/utils.js";
 
+let events = [];
+
 class Kernel {
   constructor() {
     this.#listenToCommunication();
@@ -10,7 +12,7 @@ class Kernel {
     window.onmessage = (event) => {
       if (event.origin != "https://thijmenbrand.nl")
         throw new Error("Origin is not trusted!");
-      let senderApp = event.path[0].document.activeElement.id;
+      let senderApp = event.data.origin;
 
       if (!windows.find((win) => win.title === senderApp)) return;
 
@@ -37,6 +39,11 @@ class Kernel {
           .then((res) => this.#sendDataToApp(targetApp, res, "system"));
         break;
 
+      //Settings
+      case "changeBackground":
+        core.settings.setApplicationBackground(params);
+        break;
+
       //App stuff
       case "openApp":
         core.appRegistry
@@ -44,8 +51,20 @@ class Kernel {
           .then((e) => e.initWindow())
           .finally(() => this.#sendDataToApp(targetApp, true, "system"));
         break;
-      case "sendDataToApp":
+      case "selectFile":
+        core.appRegistry
+          .application("userFiles/D/desktop/file-explorer.thijm")
+          .then((e) => e.initWindow())
+          .finally(() =>
+            this.#sendDataToApp("Explorer", "selectFile", targetApp)
+          );
+        break;
+      case "sendData":
         this.#sendDataToApp(params.target, params.data, targetApp);
+        break;
+      case "closeSelf":
+        core.rootUtils.closeWindow(targetApp);
+        break;
     }
   }
 

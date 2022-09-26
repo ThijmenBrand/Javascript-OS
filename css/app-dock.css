@@ -35,7 +35,8 @@
 }
 
 .app {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: row;
   height: var(--app-icons-size);
   width: var(--app-icon-width);
   cursor: pointer;
@@ -53,10 +54,6 @@
   margin: 0;
   color: white;
   margin-top: 5px;
-}
-
-.app:hover {
-  transform: scale(1.05);
 }
 
 .all-apps-container {

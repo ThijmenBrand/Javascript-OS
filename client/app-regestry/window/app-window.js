@@ -2,8 +2,7 @@ import DomDefaults from "../../static/dom-defaults.js";
 import Utils from "../../utils/utils.js";
 
 export let windows = [];
-let windowCount = 0;
-let lastWindow;
+export let windowCount = 0;
 
 class AppWindow {
   constructor(args) {
@@ -21,6 +20,10 @@ class AppWindow {
     this.$icon = null;
     this.$title = null;
     this.title = args.title;
+  }
+
+  destroy() {
+    this.$element.remove();
   }
 
   initTemplate() {
